@@ -1,5 +1,6 @@
 import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { app } from "./firebase";
+import { sendEmail } from "./email";
 
 const db = getFirestore(app);
 
@@ -16,14 +17,12 @@ export async function submitBooking(data: any) {
     console.log("Document written with ID: ", docRef.id);
     
     // Send email notification
-    await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: 'booking_notification',
-        bookingData: data
-      })
-    }).catch(err => console.log('Email notification failed:', err));
+    try {
+      await sendEmail('booking_notification', data);
+      console.log('Email notification sent successfully');
+    } catch (err) {
+      console.log('Email notification failed:', err);
+    }
     
     return docRef;
   } catch (error) {

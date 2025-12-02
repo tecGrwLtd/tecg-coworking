@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getBookings, acceptBooking, rejectBooking, deleteBooking } from "@/lib/firestore";
 import { onUserChanged, logout } from "@/lib/auth";
+import { sendEmail } from "@/lib/email";
 import { useRouter } from "next/navigation";
 import { Table, Button, Tag, Space, Statistic, Card, Row, Col, Spin, message } from 'antd';
 import { CheckOutlined, CloseOutlined, LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -73,11 +74,12 @@ export default function AdminBookings() {
       // Send confirmation email to customer
       const booking = bookings.find(b => b.id === id);
       if (booking) {
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'booking_acceptance', bookingData: booking })
-        }).catch(err => console.log('Email failed:', err));
+        try {
+          await sendEmail('booking_acceptance', booking);
+          console.log('Confirmation email sent successfully');
+        } catch (err) {
+          console.log('Email failed:', err);
+        }
       }
       
       message.success('Booking accepted and customer notified!');
@@ -99,11 +101,12 @@ export default function AdminBookings() {
       // Send rejection email to customer
       const booking = bookings.find(b => b.id === id);
       if (booking) {
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'booking_rejection', bookingData: booking })
-        }).catch(err => console.log('Email failed:', err));
+        try {
+          await sendEmail('booking_rejection', booking);
+          console.log('Rejection email sent successfully');
+        } catch (err) {
+          console.log('Email failed:', err);
+        }
       }
       
       message.success('Booking rejected and customer notified!');
