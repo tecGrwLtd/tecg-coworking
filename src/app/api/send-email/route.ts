@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,8 +12,8 @@ export async function POST(request: NextRequest) {
     switch (type) {
       case 'booking_notification':
         emailData = {
-          from: 'onboarding@resend.dev',
-          to: 'softwareeng@tecgrw.com',
+          from: 'Contact <contact@tecgrw.com>',
+          to: 'info@tecgrw.com',
           subject: 'New Coworking Space Booking Request',
           html: `
             <h2>New Coworking Space Booking Request</h2>
