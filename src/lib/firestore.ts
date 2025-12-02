@@ -8,11 +8,15 @@ export async function submitBooking(data: any) {
   try {
     console.log("Starting Firebase write...", data);
     
-    const docRef = await addDoc(collection(db, "bookings"), { 
-      ...data, 
+    // Convert date to ISO string to avoid Firebase custom object error
+    const bookingData = {
+      ...data,
+      date: data.date ? new Date(data.date).toISOString() : null,
       status: "pending",
-      createdAt: new Date()
-    });
+      createdAt: new Date().toISOString()
+    };
+    
+    const docRef = await addDoc(collection(db, "bookings"), bookingData);
     
     console.log("Document written with ID: ", docRef.id);
     
