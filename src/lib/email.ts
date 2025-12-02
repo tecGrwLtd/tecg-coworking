@@ -11,8 +11,8 @@ export const sendEmail = async (type: string, bookingData: any) => {
   switch (type) {
     case 'booking_notification':
       emailData = {
-        from: 'onboarding@resend.dev',
-        to: 'softwareeng@tecgrw.com',
+        from: 'Contact <contact@tecgrw.com>',
+        to: 'info@tecgrw.com',
         subject: 'New Coworking Space Booking Request',
         html: `
           <h2>New Coworking Space Booking Request</h2>

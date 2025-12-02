@@ -66,7 +66,12 @@ export default function BookingForm() {
         size="large" 
         icon={<CalendarOutlined />}
         onClick={() => setIsModalVisible(true)}
-        className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+        style={{
+          backgroundColor: '#1976d2',
+          borderColor: '#1976d2',
+          color: '#ffffff'
+        }}
+        className="hover:!bg-[#1976d2] hover:!border-[#1976d2]"
       >
         Book Coworking Space
       </Button>
@@ -154,7 +159,12 @@ export default function BookingForm() {
                 type="primary" 
                 htmlType="submit" 
                 loading={isSubmitting}
-                className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+                style={{
+                  backgroundColor: '#1976d2',
+                  borderColor: '#1976d2',
+                  color: '#ffffff'
+                }}
+                className="hover:!bg-blue-700 hover:!border-blue-700"
               >
                 Submit Booking Request
               </Button>
