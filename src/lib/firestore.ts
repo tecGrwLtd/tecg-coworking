@@ -6,8 +6,6 @@ const db = getFirestore(app);
 
 export async function submitBooking(data: any) {
   try {
-    console.log("Starting Firebase write...", data);
-    
     // Convert date to ISO string to avoid Firebase custom object error
     const bookingData = {
       ...data,
@@ -18,32 +16,25 @@ export async function submitBooking(data: any) {
     
     const docRef = await addDoc(collection(db, "bookings"), bookingData);
     
-    console.log("Document written with ID: ", docRef.id);
-    
     // Send email notification
     try {
       await sendEmail('booking_notification', data);
-      console.log('Email notification sent successfully');
     } catch (err) {
-      console.log('Email notification failed:', err);
+      // Email failed but booking still saved
     }
     
     return docRef;
   } catch (error) {
-    console.error("Firestore error details:", error);
     throw new Error(`Booking submission failed: ${error}`);
   }
 }
 
 export async function getBookings() {
   try {
-    console.log("Fetching bookings from Firestore...");
     const snapshot = await getDocs(collection(db, "bookings"));
     const bookings = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log("Fetched bookings:", bookings);
     return bookings;
   } catch (error) {
-    console.error("Error fetching bookings:", error);
     return [];
   }
 }
