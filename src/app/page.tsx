@@ -271,15 +271,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-4 border-t border-gray-300 text-center">
-            <a 
-              href="/login" 
-              className="text-sm transition-colors"
-              style={{color: '#1976d2'}}
-            >
-              Staff Login
-            </a>
-          </div>
         </div>
       </section>
 

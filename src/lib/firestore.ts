@@ -6,8 +6,6 @@ const db = getFirestore(app);
 
 export async function submitBooking(data: any) {
   try {
-    console.log("Starting Firebase write...", data);
-    
     // Convert date to ISO string to avoid Firebase custom object error
     const bookingData = {
       ...data,
@@ -18,32 +16,25 @@ export async function submitBooking(data: any) {
     
     const docRef = await addDoc(collection(db, "bookings"), bookingData);
     
-    console.log("Document written with ID: ", docRef.id);
-    
     // Send email notification
     try {
       await sendEmail('booking_notification', data);
-      console.log('Email notification sent successfully');
     } catch (err) {
-      console.log('Email notification failed:', err);
+      // Email failed but booking still saved
     }
     
     return docRef;
   } catch (error) {
-    console.error("Firestore error details:", error);
     throw new Error(`Booking submission failed: ${error}`);
   }
 }
 
 export async function getBookings() {
   try {
-    console.log("Fetching bookings from Firestore...");
     const snapshot = await getDocs(collection(db, "bookings"));
     const bookings = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log("Fetched bookings:", bookings);
     return bookings;
   } catch (error) {
-    console.error("Error fetching bookings:", error);
     return [];
   }
 }
@@ -53,11 +44,10 @@ export async function acceptBooking(id: string) {
     const bookingRef = doc(db, "bookings", id);
     await updateDoc(bookingRef, { 
       status: "accepted",
-      processedAt: new Date()
+      processedAt: new Date().toISOString()
     });
-    console.log("Booking accepted:", id);
+    return { success: true };
   } catch (error) {
-    console.error("Error accepting booking:", error);
     throw new Error("Failed to accept booking. Please try again.");
   }
 }
@@ -67,11 +57,10 @@ export async function rejectBooking(id: string) {
     const bookingRef = doc(db, "bookings", id);
     await updateDoc(bookingRef, { 
       status: "rejected",
-      processedAt: new Date()
+      processedAt: new Date().toISOString()
     });
-    console.log("Booking rejected:", id);
+    return { success: true };
   } catch (error) {
-    console.error("Error rejecting booking:", error);
     throw new Error("Failed to reject booking. Please try again.");
   }
 }
@@ -80,9 +69,7 @@ export async function deleteBooking(id: string) {
   try {
     const bookingRef = doc(db, "bookings", id);
     await deleteDoc(bookingRef);
-    console.log("Booking deleted:", id);
   } catch (error) {
-    console.error("Error deleting booking:", error);
     throw new Error("Failed to delete booking. Please try again.");
   }
 }

@@ -64,7 +64,6 @@ export default function AdminBookings() {
       }));
       setBookings(normalizedBookings);
     } catch (error) {
-      console.error("Error loading bookings:", error);
       setShowMessage({type: 'error', text: 'Failed to load bookings'});
     } finally {
       setLoading(false);
@@ -82,15 +81,13 @@ export default function AdminBookings() {
       if (booking) {
         try {
           await sendEmail('booking_acceptance', booking);
-          console.log('Confirmation email sent successfully');
         } catch (err) {
-          console.log('Email failed:', err);
+          // Email failed but booking status updated
         }
       }
       
       setShowMessage({type: 'success', text: 'Booking accepted and customer notified!'});
     } catch (error) {
-      console.error("Error accepting booking:", error);
       setShowMessage({type: 'error', text: 'Failed to accept booking'});
     } finally {
       setProcessingIds(prev => prev.filter(pId => pId !== id));
@@ -108,15 +105,13 @@ export default function AdminBookings() {
       if (booking) {
         try {
           await sendEmail('booking_rejection', booking);
-          console.log('Rejection email sent successfully');
         } catch (err) {
-          console.log('Email failed:', err);
+          // Email failed but booking status updated
         }
       }
       
       setShowMessage({type: 'success', text: 'Booking rejected and customer notified!'});
     } catch (error) {
-      console.error("Error rejecting booking:", error);
       setShowMessage({type: 'error', text: 'Failed to reject booking'});
     } finally {
       setProcessingIds(prev => prev.filter(pId => pId !== id));
@@ -131,7 +126,6 @@ export default function AdminBookings() {
       setBookings(updatedBookings);
       setShowMessage({type: 'success', text: 'Booking deleted successfully!'});
     } catch (error) {
-      console.error("Error deleting booking:", error);
       setShowMessage({type: 'error', text: 'Failed to delete booking'});
     } finally {
       setProcessingIds(prev => prev.filter(pId => pId !== id));
