@@ -1,0 +1,14 @@
+[00:00:02.564] Server  LOG      ✓ Ready in 1848ms
+[00:00:13.615] Server  LOG      ○ Compiling / ...
+[00:00:20.067] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:22.618] Browser LOG     Fetching bookings from Firestore...
+[00:00:23.619] Browser LOG     Fetched bookings: [{"createdAt":"2025-12-03T07:50:38.781Z","date":"2025-12-02T22:00:00.000Z","email":"softwareeng@tecgrw.com","id":"6h63HgB4FqqSp6qF2x7H","name":"Irenee Iradukunda","people":1,"phone":"0787486966","status":"pending"}]
+[00:05:37.542] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:38.840] Browser LOG     Fetching bookings from Firestore...
+[00:05:39.863] Browser LOG     Fetched bookings: [{"createdAt":"2025-12-03T07:50:38.781Z","date":"2025-12-02T22:00:00.000Z","email":"softwareeng@tecgrw.com","id":"6h63HgB4FqqSp6qF2x7H","name":"Irenee Iradukunda","people":1,"phone":"0787486966","status":"pending"},{"createdAt":"2025-12-04T07:44:15.069Z","date":"2025-12-09T22:00:00.000Z","email":"jinga_89@hotmail.com","id":"t9SK9RHZ6wyfgmAdSWmu","name":"Nadra Ramzan","people":2,"phone":"03448762847","status":"pending"}]
+[00:05:54.301] Browser LOG     Booking deleted: 6h63HgB4FqqSp6qF2x7H
+[00:05:56.622] Browser LOG     User logged out
+[00:05:56.622] Browser WARN    Image with src "http://localhost:3000/space-1.jpg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:06:00.247] Browser WARN    Image with src "http://localhost:3000/space-1.jpg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:06:07.839] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:08.139] Browser WARN    Image with src "http://localhost:3000/space-1.jpg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
