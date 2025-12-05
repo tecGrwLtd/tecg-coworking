@@ -52,7 +52,6 @@ export default function BookingForm() {
       form.resetFields();
       setIsModalVisible(false);
     } catch (error: any) {
-      console.error("Booking submission error:", error);
       message.error(error.message || 'Failed to submit booking. Please try again.');
     } finally {
       setIsSubmitting(false);

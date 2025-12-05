@@ -53,14 +53,14 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 async function POST(request) {
     try {
         const { type, bookingData } = await request.json();
-        const RESEND_API_KEY = ("TURBOPACK compile-time value", "e_GFhZ7UiF_LvwyC6gXScnU2oeevEcdRk5G");
+        const RESEND_API_KEY = process.env.RESEND_API_KEY || ("TURBOPACK compile-time value", "e_GFhZ7UiF_LvwyC6gXScnU2oeevEcdRk5G");
         if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
         ;
         let emailData;
         switch(type){
             case 'booking_notification':
                 emailData = {
-                    from: 'Tecgrw Coworking <onboarding@resend.dev>',
+                    from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
                     to: 'info@tecgrw.com',
                     subject: 'New Coworking Space Booking Request',
                     html: `
@@ -78,7 +78,7 @@ async function POST(request) {
                 break;
             case 'booking_acceptance':
                 emailData = {
-                    from: 'Tecgrw Coworking <onboarding@resend.dev>',
+                    from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
                     to: bookingData.email,
                     subject: '🎉 Your Coworking Space Booking is Confirmed!',
                     html: `
@@ -115,7 +115,7 @@ async function POST(request) {
                 break;
             case 'booking_rejection':
                 emailData = {
-                    from: 'Tecgrw Coworking <onboarding@resend.dev>',
+                    from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
                     to: bookingData.email,
                     subject: 'Coworking Space Booking Update',
                     html: `
@@ -156,7 +156,6 @@ async function POST(request) {
                     status: 400
                 });
         }
-        console.log('Sending email with data:', emailData);
         const response = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -165,10 +164,15 @@ async function POST(request) {
             },
             body: JSON.stringify(emailData)
         });
-        console.log('Response status:', response.status);
         if (!response.ok) {
             const error = await response.text();
-            console.error('Email sending failed:', error);
+            console.error('Resend API Error:', {
+                status: response.status,
+                statusText: response.statusText,
+                error: error,
+                hasApiKey: !!RESEND_API_KEY,
+                apiKeyPrefix: ("TURBOPACK compile-time truthy", 1) ? RESEND_API_KEY.substring(0, 8) + '...' : "TURBOPACK unreachable"
+            });
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: `Failed to send email: ${error}`
             }, {
@@ -176,13 +180,11 @@ async function POST(request) {
             });
         }
         const result = await response.json();
-        console.log('Email sent successfully:', result);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             success: true,
             result
         });
     } catch (error) {
-        console.error('Email API error:', error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Internal server error'
         }, {

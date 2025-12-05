@@ -44,11 +44,10 @@ export async function acceptBooking(id: string) {
     const bookingRef = doc(db, "bookings", id);
     await updateDoc(bookingRef, { 
       status: "accepted",
-      processedAt: new Date()
+      processedAt: new Date().toISOString()
     });
-    console.log("Booking accepted:", id);
+    return { success: true };
   } catch (error) {
-    console.error("Error accepting booking:", error);
     throw new Error("Failed to accept booking. Please try again.");
   }
 }
@@ -58,11 +57,10 @@ export async function rejectBooking(id: string) {
     const bookingRef = doc(db, "bookings", id);
     await updateDoc(bookingRef, { 
       status: "rejected",
-      processedAt: new Date()
+      processedAt: new Date().toISOString()
     });
-    console.log("Booking rejected:", id);
+    return { success: true };
   } catch (error) {
-    console.error("Error rejecting booking:", error);
     throw new Error("Failed to reject booking. Please try again.");
   }
 }
@@ -71,9 +69,7 @@ export async function deleteBooking(id: string) {
   try {
     const bookingRef = doc(db, "bookings", id);
     await deleteDoc(bookingRef);
-    console.log("Booking deleted:", id);
   } catch (error) {
-    console.error("Error deleting booking:", error);
     throw new Error("Failed to delete booking. Please try again.");
   }
 }

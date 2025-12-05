@@ -4,7 +4,7 @@ export async function POST(request: NextRequest) {
   try {
     const { type, bookingData } = await request.json();
     
-    const RESEND_API_KEY = process.env.NEXT_PUBLIC_RESEND_API_KEY;
+    const RESEND_API_KEY = process.env.RESEND_API_KEY || process.env.NEXT_PUBLIC_RESEND_API_KEY;
     
     if (!RESEND_API_KEY) {
       return NextResponse.json({ error: 'Resend API key not found' }, { status: 500 });
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     switch (type) {
       case 'booking_notification':
         emailData = {
-          from: 'Tecgrw Coworking <onboarding@resend.dev>',
+          from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
           to: 'info@tecgrw.com',
           subject: 'New Coworking Space Booking Request',
           html: `
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         
       case 'booking_acceptance':
         emailData = {
-          from: 'Tecgrw Coworking <onboarding@resend.dev>',
+          from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
           to: bookingData.email,
           subject: '🎉 Your Coworking Space Booking is Confirmed!',
           html: `
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
         
       case 'booking_rejection':
         emailData = {
-          from: 'Tecgrw Coworking <onboarding@resend.dev>',
+          from: 'Tecgrw Coworking <noreply@coworkingspace.tecgrw.com>',
           to: bookingData.email,
           subject: 'Coworking Space Booking Update',
           html: `
@@ -122,6 +122,13 @@ export async function POST(request: NextRequest) {
     
     if (!response.ok) {
       const error = await response.text();
+      console.error('Resend API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: error,
+        hasApiKey: !!RESEND_API_KEY,
+        apiKeyPrefix: RESEND_API_KEY ? RESEND_API_KEY.substring(0, 8) + '...' : 'none'
+      });
       return NextResponse.json({ error: `Failed to send email: ${error}` }, { status: response.status });
     }
 
