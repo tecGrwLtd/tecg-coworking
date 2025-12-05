@@ -13,10 +13,13 @@ export default function Home() {
 
   const images = [
     '/space-1.jpg',
-    '/space-2.jpg', 
-    '/space-3.jpg',
+    // '/space-2.jpg', 
+    // '/space-3.jpg',
     '/space-4.jpg',
-    '/space-5.jpg'
+    '/space-5.jpg',
+    '/Gemini_Generated_Image_kw5s30kw5s30kw5s.png',
+    '/Gemini_Generated_Image_tki3wltki3wltki3.png',
+    '/Gemini_Generated_Image_jpc51rjpc51rjpc5 (3).png'
   ];
 
   useEffect(() => {
@@ -126,6 +129,19 @@ export default function Home() {
       {/* About Section */}
       <section className="bg-gray-50 px-4 py-20 sm:px-8 md:px-16 lg:px-32">
         <div className="mx-auto max-w-4xl">
+          {/* Workspace Image */}
+          <div className="mb-12 flex justify-center">
+            <div className="relative w-full max-w-3xl overflow-hidden rounded-xl shadow-2xl">
+              <Image
+                src="/Gemini_Generated_Image_kw5s30kw5s30kw5s.png"
+                alt="Tecgrw Coworking Space - Modern workspace with professionals working"
+                width={800}
+                height={400}
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
+          </div>
           <h2 className="mb-8 text-center text-4xl font-bold text-gray-900">
             Why Choose Tecgrw
           </h2>
@@ -315,3 +331,4 @@ export default function Home() {
     </div>
   );
 }
+
