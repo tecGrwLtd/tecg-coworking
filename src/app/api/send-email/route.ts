@@ -4,9 +4,10 @@ export async function POST(request: NextRequest) {
   try {
     const { type, bookingData } = await request.json();
     
-    const RESEND_API_KEY = process.env.RESEND_API_KEY || process.env.NEXT_PUBLIC_RESEND_API_KEY;
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
     
     if (!RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set in environment variables');
       return NextResponse.json({ error: 'Resend API key not found' }, { status: 500 });
     }
 
