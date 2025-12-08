@@ -16,7 +16,7 @@ export default function Home() {
     // '/space-2.jpg', 
     // '/space-3.jpg',
     '/space-4.jpg',
-    '/space-5.jpg',
+    // '/space-5.jpg',
     '/Gemini_Generated_Image_kw5s30kw5s30kw5s.png',
     '/Gemini_Generated_Image_tki3wltki3wltki3.png',
     '/Gemini_Generated_Image_jpc51rjpc51rjpc5 (3).png'
